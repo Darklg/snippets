@@ -21,12 +21,11 @@ function dksnippets_extract_prices($str = '') {
     preg_match_all('/ \d+([\.,])\d+ /', $str, $matches_amount);
     if (isset($matches_amount[0][0])) {
         foreach ($matches_amount[0] as $nb) {
-            $prices[] = floatval($nb);
+            $prices[] = floatval(trim(str_replace(',', '.', $nb)));
         }
     }
     return $prices;
 }
-
 
 /**
  * Extract highest price from a string
@@ -87,4 +86,3 @@ var_dump(dksnippets_extract_lowest_price(' 012,00  11,00 '));
 var_dump(dksnippets_extract_lowest_price(' 012.00  11.00 '));
 echo '</pre>';
 */
-
