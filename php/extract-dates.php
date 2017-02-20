@@ -5,11 +5,13 @@ function dksnippets_extract_dates($str = '') {
     $matches = array();
     $str = str_replace(array("\n", "\r"), " ", $str);
     $str = str_replace(' ', '', $str);
+    $str = str_replace('é', 'e', $str);
+    $str = str_replace('û', 'u', $str);
     $str = strtolower($str);
 
+
     $months_list = array(
-        array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"),
-        array("janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "aout", "sep.", "oct.", "nov.", "déc."),
+        array("janv.", "fevr.", "mars", "avril", "mai", "juin", "juil.", "aout", "sep.", "oct.", "nov.", "dec."),
         array("janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "decembre")
     );
 
