@@ -9,13 +9,16 @@ function dksnippets_extract_prices($str = '') {
     $prices = array();
 
     /* Clean string */
-    $str = str_replace("\n", " ", strtolower($str));
+    $str = str_replace(array("\n", "\n"), " ", strtolower($str));
 
     /* Remove useless numbers and fake results */
     $str = str_replace(array("24h", "7j", "00 %", ".00%", "*"), "", $str);
     $str = str_replace(", ", ",", $str);
     $str = str_replace("/ ", "/", $str);
     $str = str_replace(" ", "  ", $str);
+
+    /* Remove invalid numbers */
+    $str = preg_replace("/(capital[a-z ]+[0-9 \.,]+)/is", "", $str);
 
     /* Extract all numbers surrounded by spaces */
     preg_match_all('/ \d+([\.,])\d+ /', $str, $matches_amount);
@@ -32,7 +35,7 @@ function dksnippets_extract_prices($str = '') {
  * @param  string $str Entry string
  * @return string      Highest price found (formatted : 11,11)
  */
-function dksnippets_extract_highest_price($str = '') {
+function dksnippets_extract_highest_price($str = '', $format = true) {
     $prices = dksnippets_extract_prices($str);
 
     /* Store highest amount */
@@ -43,7 +46,11 @@ function dksnippets_extract_highest_price($str = '') {
             $highest_amount = $tmp_nb;
         }
     }
-    return number_format(floatval(str_replace(',', '.', $highest_amount)), 2, ',', '');
+
+    if ($format) {
+        $highest_amount = number_format(floatval(str_replace(',', '.', $highest_amount)), 2, ',', '');
+    }
+    return $highest_amount;
 }
 
 /*
@@ -62,7 +69,7 @@ echo '</pre>';
  * @param  string $str Entry string
  * @return string      Lowest price found (formatted : 11,11)
  */
-function dksnippets_extract_lowest_price($str = '') {
+function dksnippets_extract_lowest_price($str = '', $format = true) {
     $prices = dksnippets_extract_prices($str);
 
     /* Store lowest amount */
@@ -73,7 +80,11 @@ function dksnippets_extract_lowest_price($str = '') {
             $lowest_amount = $tmp_nb;
         }
     }
-    return number_format(floatval(str_replace(',', '.', $lowest_amount)), 2, ',', '');
+
+    if ($format) {
+        $lowest_amount = number_format(floatval(str_replace(',', '.', $lowest_amount)), 2, ',', '');
+    }
+    return $lowest_amount;
 }
 
 /*
