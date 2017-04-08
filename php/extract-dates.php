@@ -11,8 +11,6 @@ function dksnippets_extract_dates($str = '') {
     );
     $month_after = array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
-
-
     /* Clean STR */
     $str = str_replace(array("\n", "\r"), " ", $str);
     $str = strtolower($str);
@@ -20,7 +18,6 @@ function dksnippets_extract_dates($str = '') {
     $str = str_replace(' ', '', $str);
     $str = str_replace('é', 'e', $str);
     $str = str_replace('û', 'u', $str);
-
 
     /* Detect probable year */
     $probable_year = date('Y');
@@ -43,7 +40,6 @@ function dksnippets_extract_dates($str = '') {
         $probable_year = key($years);
     }
     $probable_year_min = substr($probable_year, -2, 2);
-
 
     /* Replace month by number */
     foreach ($months_list as $months_before) {
@@ -100,8 +96,6 @@ function dksnippets_extract_dates($str = '') {
     ksort($dates);
     return $dates;
 }
-
-
 
 /* TESTS
 -------------------------- */
