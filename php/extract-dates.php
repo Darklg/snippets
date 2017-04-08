@@ -102,8 +102,11 @@ function dksnippets_extract_dates($str = '') {
 }
 
 
+
 /* TESTS
 -------------------------- */
+
+/*
 $tests = array(
     // Year YY : Check probable or previous year
     array(' 07/10/17 ', '07/10/2017'),
@@ -119,7 +122,7 @@ $tests = array(
     array(' 19.10.2012 ', '19/10/2012'),
     array(' 19 octobre 2012 ', '19/10/2012'),
     array(' 19 oct. 2012 ', '19/10/2012'),
-    /* Errors */
+    // Errors
     array(' March 202 ', false),
     array(' Mars202 ', false),
 );
@@ -137,3 +140,5 @@ foreach ($tests as $test) {
     echo '</tr>';
 }
 echo '</table>';
+
+*/
