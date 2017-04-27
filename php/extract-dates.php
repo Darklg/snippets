@@ -21,7 +21,7 @@ function dksnippets_extract_dates($str = '') {
 
     /* Detect probable year */
     $probable_year = date('Y');
-    $years = array();
+    $years = array($probable_year => 1);
     preg_match_all('/(?:(?:19|20)[0-9]{2})/isU', $orig_str, $years_tmp);
     /* Extract years */
     if (!empty($years_tmp[0])) {
