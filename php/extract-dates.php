@@ -12,12 +12,12 @@ function dksnippets_extract_dates($str = '') {
     $month_after = array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
     /* Clean STR */
+    $str = str_replace('é', 'e', $str);
+    $str = str_replace('û', 'u', $str);
     $str = str_replace(array("\n", "\r"), " ", $str);
     $str = strtolower($str);
     $orig_str = $str;
     $str = str_replace(' ', '', $str);
-    $str = str_replace('é', 'e', $str);
-    $str = str_replace('û', 'u', $str);
 
     /* Detect probable year */
     $probable_year = date('Y');
