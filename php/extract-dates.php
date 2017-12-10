@@ -1,6 +1,15 @@
 <?php
 
-function dksnippets_extract_dates($str = '') {
+function dksnippets_extract_dates($str = '', $opts = array()) {
+    if (!is_array($opts)) {
+        $opts = array();
+    }
+    if (!isset($opts['force_nospace'])) {
+        $opts['force_nospace'] = true;
+    }
+    if (!isset($opts['years_to_keep']) || !is_array($opts['years_to_keep'])) {
+        $opts['years_to_keep'] = array();
+    }
     $dates = array();
     $matches = array();
     $months_list = array(
@@ -12,12 +21,15 @@ function dksnippets_extract_dates($str = '') {
     $month_after = array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
     /* Clean STR */
+    $base_str = $str;
     $str = str_replace('é', 'e', $str);
     $str = str_replace('û', 'u', $str);
     $str = str_replace(array("\n", "\r"), " ", $str);
     $str = strtolower($str);
     $orig_str = $str;
-    $str = str_replace(' ', '', $str);
+    if ($opts['force_nospace']) {
+        $str = str_replace(' ', '', $str);
+    }
 
     /* Detect probable year */
     $probable_year = date('Y');
@@ -48,12 +60,18 @@ function dksnippets_extract_dates($str = '') {
         }
     }
 
+    $years_yy = array();
+    foreach ($years as $year => $nb) {
+        $years_yy[] = substr($year, -2);
+    }
+
     $dates_regex = array(
         /* Detect numeric dates (international format) : 20/10/2010 */
         '/[0-3]?[0-9][\/\.\-][0-1][0-9][\/\.\-]([1-2][0-9]{3})/isU',
         /* Detect dates with a YY year */
-        '/[0-3]?[0-9][\/\.\-][0-1][0-9][\/\.\-](' . $probable_year_min . '|' . ($probable_year_min - 1) . ')/isU'
+        '/[0-3]?[0-9][\/\.\-][0-1][0-9][\/\.\-](' . implode('|', $years_yy) . '|' . ($probable_year_min - 1) . ')/isU'
     );
+
     foreach ($dates_regex as $date_regex) {
         preg_match_all($date_regex, $str, $matches);
         if (!empty($matches[0])) {
@@ -93,7 +111,24 @@ function dksnippets_extract_dates($str = '') {
         }
     }
 
+    /* Keep only dates in years to keep */
+    if (!empty($opts['years_to_keep'])) {
+        $old_dates = $dates;
+        $dates = array();
+        foreach ($old_dates as $time => $date) {
+            $tmp_year = date('Y', $time);
+            if (in_array($tmp_year, $opts['years_to_keep'])) {
+                $dates[$time] = $date;
+            }
+        }
+    }
+
     ksort($dates);
+
+    if (empty($dates) && $opts['force_nospace']) {
+        $opts['force_nospace'] = false;
+        return dksnippets_extract_dates($base_str, $opts);
+    }
     return $dates;
 }
 
