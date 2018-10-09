@@ -16,7 +16,8 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
         array("janv.", "fevr.", "mars", "avril", "mai", "juin", "juil.", "aout", "sep.", "oct.", "nov.", "dec."),
         array("janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "decembre"),
         array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'),
-        array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec')
+        array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'),
+        array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'),
     );
     $month_after = array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
