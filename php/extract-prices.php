@@ -21,6 +21,7 @@ function dksnippets_extract_prices($str = '') {
 
     /* Remove invalid numbers */
     $str = preg_replace("/(capital[a-z ]+[0-9 \.,]+)/is", "", $str);
+    $str = preg_replace("/(rcs[a-z ]+[0-9 \.,]+)/is", "", $str);
 
     /* Extract all numbers surrounded by spaces */
     preg_match_all('/ \d+([\.,])\d+ /', $str, $matches_amount);
