@@ -87,6 +87,26 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
         }
     }
 
+    $dates_regex = array(
+        /* Detect numeric dates (YYYY-MM-DD format) : 2010-10-20 */
+        '/([1-2][0-9]{3})[\/\.\-][0-1][0-9][\/\.\-][0-3]?[0-9]/is',
+    );
+
+    foreach ($dates_regex as $date_regex) {
+        preg_match_all($date_regex, $str, $matches);
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $match) {
+                $match = str_replace(array('-', '.'), '/', $match);
+                $match_items = array_map('intval', explode('/', $match));
+                $time = mktime(12, 0, 0, $match_items[1], $match_items[2], $match_items[0]);
+                if ($time > 0) {
+                    $dates[$time] = date('d/m/Y', $time);
+                }
+            }
+        }
+    }
+
+
     /* Search dates in textual format */
     foreach ($months_list as $month_list) {
         $month_list_regex = str_replace('.', '\.', implode('|', $month_list));
