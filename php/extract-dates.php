@@ -17,7 +17,7 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
         array("janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "decembre"),
         array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'),
         array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sept', 'oct', 'nov', 'dec'),
-        array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'),
+        array('jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec')
     );
     $month_after = array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 
@@ -89,7 +89,7 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
 
     $dates_regex = array(
         /* Detect numeric dates (YYYY-MM-DD format) : 2010-10-20 */
-        '/([1-2][0-9]{3})[\/\.\-][0-1][0-9][\/\.\-][0-3]?[0-9]/is',
+        '/([1-2][0-9]{3})[\/\.\-][0-1][0-9][\/\.\-][0-3]?[0-9]/is'
     );
 
     foreach ($dates_regex as $date_regex) {
@@ -105,7 +105,6 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
             }
         }
     }
-
 
     /* Search dates in textual format */
     foreach ($months_list as $month_list) {
@@ -125,7 +124,7 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
         preg_match_all($date_regex_inv, $orig_str, $matches);
         if (!empty($matches[0])) {
             $found_month = array_search($matches[1][0], $month_list, false) + 1;
-            $time = mktime(12, 0, 0, $found_month, $matches[2][0], $probable_year);
+            $time = mktime(12, 0, 0, $found_month, preg_replace('/\D/', '', $matches[2][0]), $probable_year);
             if ($time > 0) {
                 $dates[$time] = date('d/m/Y', $time);
             }
