@@ -23,8 +23,8 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
 
     /* Clean STR */
     $base_str = $str;
-    $str = str_replace('é', 'e', $str);
-    $str = str_replace('û', 'u', $str);
+    $str = str_replace(array('é','ã©','Ã©'), 'e', $str);
+    $str = str_replace(array('û','ã»','Ã»'), 'u', $str);
     $str = str_replace(array("\n", "\r"), " ", $str);
     $str = strtolower($str);
     $orig_str = $str;
