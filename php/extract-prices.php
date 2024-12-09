@@ -17,6 +17,8 @@ function dksnippets_extract_prices($str = '') {
     /* Remove useless numbers and fake results */
     $str = str_replace(array("24h", "tva 10.00", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
     $str = str_replace("eur", " eur", $str);
+    $str = str_replace("us$", " us$ ", $str);
+    $str = str_replace("$", " $ ", $str);
     $str = str_replace(":", " : ", $str);
     $str = str_replace(", ", ",", $str);
     $str = str_replace("/ ", "/", $str);
