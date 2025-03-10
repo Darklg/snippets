@@ -14,6 +14,9 @@ function dksnippets_extract_prices($str = '') {
     /* Avoid numbers near "eur" */
     $str = preg_replace("/([0-9\.]+)(e|â)/is", "$1 $2", $str);
 
+    /* Remove times */
+    $str = preg_replace("/([0-9]+):([0-9]+):([0-9]+)/is", "", $str);
+
     /* Remove useless numbers and fake results */
     $str = str_replace(array("24h", "tva 10.00", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
     $str = str_replace("eur", " eur", $str);
@@ -25,8 +28,16 @@ function dksnippets_extract_prices($str = '') {
     $str = str_replace(" ", "  ", $str);
 
     /* Remove invalid numbers */
-    $str = preg_replace("/(capital[a-z ]+[0-9 \.,]+)/is", "", $str);
-    $str = preg_replace("/(rcs[a-z ]+[0-9 \.,]+)/is", "", $str);
+    $invalid_prefix = array(
+        'nb de points acquis',
+        'solde de points',
+        'capital',
+        'rcs'
+    );
+    foreach ($invalid_prefix as $prefix) {
+        $prefix = str_replace(' ', '\s+', $prefix);
+        $str = preg_replace("/(" . $prefix . "([:\s]*)[0-9 \.,]+)/is", "", $str);
+    }
 
     /* Extract all numbers surrounded by spaces */
     preg_match_all('/ \d+([\.,])\d+ /', $str, $matches_amount);
@@ -35,6 +46,7 @@ function dksnippets_extract_prices($str = '') {
             $prices[] = floatval(trim(str_replace(',', '.', $nb)));
         }
     }
+
     return $prices;
 }
 
