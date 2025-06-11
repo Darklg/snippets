@@ -29,7 +29,16 @@ function dksnippets_extract_prices($str = '') {
 
     /* Remove invalid numbers */
     $invalid_prefix = array(
+        'social :',
+        'capital social:',
+        'au capital social de',
+        'au capital de 298',
+        'intracommunautaire:',
+        'paiement en devises avec une carte one',
         'nb de points acquis',
+        'nb de points acquÃ­s :',
+        'total hors avantages',
+        'licence:',
         'solde de points',
         'capital',
         'rcs'
