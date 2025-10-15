@@ -23,6 +23,7 @@ function dksnippets_extract_prices($str = '') {
     $str = str_replace("us$", " us$ ", $str);
     $str = str_replace("$", " $ ", $str);
     $str = str_replace(":", " : ", $str);
+    $str = str_replace("¬", " ¬ ", $str);
     $str = str_replace(", ", ",", $str);
     $str = str_replace("/ ", "/", $str);
     $str = str_replace(" ", "  ", $str);
