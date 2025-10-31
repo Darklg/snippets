@@ -26,6 +26,7 @@ function dksnippets_extract_dates($str = '', $opts = array()) {
     $str = str_replace(array('é','ã©','Ã©'), 'e', $str);
     $str = str_replace(array('û','ã»','Ã»'), 'u', $str);
     $str = str_replace(array("\n", "\r"), " ", $str);
+    $str = preg_replace('/([0-9]*)th/isU','$1', $str);
     $str = strtolower($str);
     $orig_str = $str;
     if ($opts['force_nospace']) {
