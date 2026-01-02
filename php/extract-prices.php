@@ -17,6 +17,8 @@ function dksnippets_extract_prices($str = '') {
     /* Remove times */
     $str = preg_replace("/([0-9]+):([0-9]+):([0-9]+)/is", "", $str);
 
+    $str = preg_replace( '/[^a-z0-9,\. ]/i', '', $str);
+
     /* Remove useless numbers and fake results */
     $str = str_replace(array("24h", "tva 10.00", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
     $str = str_replace("eur", " eur", $str);
@@ -30,15 +32,22 @@ function dksnippets_extract_prices($str = '') {
 
     /* Remove invalid numbers */
     $invalid_prefix = array(
-        'social :',
+        'tva ',
         'capital social:',
+        'social :',
+        'social  ',
         'au capital social de',
         'au capital de 298',
+        'au capital de 300',
+        'plafonne ',
         'intracommunautaire:',
+        'compensons Ã  ',
         'paiement en devises avec une carte one',
         'nb de points acquis',
         'nb de points acquÃ­s :',
         'total hors avantages',
+        'sous-total',
+        'hors:',
         'licence:',
         'solde de points',
         'capital',
