@@ -11,16 +11,20 @@ function dksnippets_extract_prices($str = '') {
     /* Clean string */
     $str = str_replace(array("\n", "\n"), " ", strtolower($str));
 
+    /* Remove percent */
+    $str = preg_replace('/([0-9\.]+)\%/is','', $str);
+
     /* Avoid numbers near "eur" */
     $str = preg_replace("/([0-9\.]+)(e|â)/is", "$1 $2", $str);
 
     /* Remove times */
     $str = preg_replace("/([0-9]+):([0-9]+):([0-9]+)/is", "", $str);
 
+    /* Remove invalid chars */
     $str = preg_replace( '/[^a-z0-9,\. ]/i', '', $str);
 
     /* Remove useless numbers and fake results */
-    $str = str_replace(array("24h", "tva 10.00", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
+    $str = str_replace(array("24h", "tva 10.00", "20.0%", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
     $str = str_replace("eur", " eur", $str);
     $str = str_replace("us$", " us$ ", $str);
     $str = str_replace("$", " $ ", $str);
