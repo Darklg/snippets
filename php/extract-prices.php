@@ -12,7 +12,7 @@ function dksnippets_extract_prices($str = '') {
     $str = str_replace(array("\n", "\n"), " ", strtolower($str));
 
     /* Remove percent */
-    $str = preg_replace('/([0-9\.]+)\%/is','', $str);
+    $str = preg_replace('/([0-9\.]+)\%/is', '', $str);
 
     /* Avoid numbers near "eur" */
     $str = preg_replace("/([0-9\.]+)(e|â)/is", "$1 $2", $str);
@@ -21,7 +21,7 @@ function dksnippets_extract_prices($str = '') {
     $str = preg_replace("/([0-9]+):([0-9]+):([0-9]+)/is", "", $str);
 
     /* Remove invalid chars */
-    $str = preg_replace( '/[^a-z0-9,\. ]/i', '', $str);
+    $str = preg_replace('/[^a-z0-9,\. ]/i', '', $str);
 
     /* Remove useless numbers and fake results */
     $str = str_replace(array("24h", "tva 10.00", "20.0%", "tva 20.00", "7j", "00 %", ".00%", "*"), "", $str);
@@ -57,6 +57,11 @@ function dksnippets_extract_prices($str = '') {
         'capital',
         'rcs'
     );
+    $months = array('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december');
+    foreach ($months as $month) {
+        $invalid_prefix[] = $month . ' ';
+    }
+
     foreach ($invalid_prefix as $prefix) {
         $prefix = str_replace(' ', '\s+', $prefix);
         $str = preg_replace("/(" . $prefix . "([:\s]*)[0-9 \.,]+)/is", "", $str);
