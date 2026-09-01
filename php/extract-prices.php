@@ -9,7 +9,10 @@ function dksnippets_extract_prices($str = '') {
     $prices = array();
 
     /* Clean string */
-    $str = str_replace(array("\n", "\n"), " ", strtolower($str));
+    $str = str_replace(array("\n", "\r", "  "), " ", strtolower($str));
+
+    /* Remove multiple spaces */
+    $str = preg_replace('/\s+/', ' ', $str);
 
     /* Remove percent */
     $str = preg_replace('/([0-9\.]+)\%/is', '', $str);
@@ -41,11 +44,16 @@ function dksnippets_extract_prices($str = '') {
         'social :',
         'social  ',
         'au capital social de',
+        'au capital de 118',
         'au capital de 298',
         'au capital de 300',
         'plafonne ',
         'intracommunautaire:',
+        'maximum Ã  1',
+        'maximum    ',
         'compensons Ã  ',
+        'Ã  ',
+        'Ã ',
         'paiement en devises avec une carte one',
         'nb de points acquis',
         'nb de points acquÃ­s :',
